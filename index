@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Devis en ligne</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    :root {
+      --primary: #2563eb;
+      --primary-soft: #dbeafe;
+      --bg: #f5f5f7;
+      --card: #ffffff;
+      --border: #e5e7eb;
+      --text: #111827;
+      --muted: #6b7280;
+      --danger: #b91c1c;
+      --radius: 14px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    .page {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 1.5rem;
+    }
+
+    @media (min-width: 768px) {
+      .page {
+        padding: 2.5rem 1.5rem;
+      }
+    }
+
+    .card {
+      background: var(--card);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.07);
+      border: 1px solid var(--border);
+    }
+
+    h1 {
+      font-size: 1.6rem;
+      margin: 0 0 0.25rem;
+    }
+
+    .subtitle {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .header-row {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+    }
+
+    @media (min-width: 640px) {
+      .header-row {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+      }
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      padding: 0.15rem 0.5rem;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      background: var(--primary-soft);
+      color: var(--primary);
+      font-weight: 500;
+    }
+
+    .badge-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: #22c55e;
+    }
+
+    .section-title {
+      font-size: 1rem;
+      font-weight: 600;
+      margin: 1.5rem 0 0.75rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .section-title span {
+      color: var(--muted);
+      font-size: 0.85rem;
+      font-weight: 400;
+    }
+
+    .grid {
+      display: grid;
+      gap: 0.75rem;
+    }
+
+    @media (min-width: 640px) {
+      .grid-2 {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 500;
+      margin-bottom: 0.15rem;
+    }
+
+    .input,
+    select {
+      width: 100%;
+      padding: 0.45rem 0.6rem;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      font-size: 0.9rem;
+      outline: none;
+      background: #f9fafb;
+    }
+
+    .input:focus,
+    select:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 1px rgba(37, 99, 235, 0.25);
+      background: #ffffff;
+    }
+
+    .small {
+      font-size: 0.78rem;
+    }
+
+    .muted {
+      color: var(--muted);
+    }
+
+    .table-wrapper {
+      margin-top: 0.75rem;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: #f9fafb;
+      overflow: hidden;
+    }
+
+    .table-scroll {
+      width: 100%;
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 700px;
+      font-size: 0.85rem;
+    }
+
+    thead {
+      background: #eef2ff;
+    }
+
+    th, td {
+      padding: 0.55rem 0.6rem;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+
+    th {
+      font-weight: 600;
+      white-space: nowrap;
+      font-size: 0.8rem;
+    }
+
+    tbody tr:nth-child(even) {
+      background: #f9fafb;
+    }
+
+    tbody tr:last-child td {
+      border-bottom: none;
+    }
+
+    .text-right {
+      text-align: right;
+    }
+
+    .line-controls {
+      display: flex;
+      gap: 0.25rem;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .btn {
+      border-radius: 999px;
+      border: none;
+      padding: 0.45rem 0.9rem;
+      font-size: 0.85rem;
+      font-weight: 500;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.3rem;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: #ffffff;
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--primary);
+      border: 1px solid var(--primary-soft);
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--muted);
+      border-radius: 999px;
+      border: none;
+      padding: 0.2rem 0.45rem;
+      font-size: 0.8rem;
+    }
+
+    .btn-danger {
+      color: var(--danger);
+    }
+
+    .btn:disabled {
+      opacity: 0.5;
+      cursor: default;
+    }
+
+    .totals {
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+      margin-top: 0.8rem;
+      align-items: flex-end;
+    }
+
+    .totals-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 3rem;
+      min-width: 230px;
+      font-size: 0.9rem;
+    }
+
+    .totals-label {
+      color: var(--muted);
+    }
+
+    .totals-value {
+      font-weight: 600;
+    }
+
+    .totals-main {
+      font-size: 1.05rem;
+    }
+
+    .footer-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      margin-top: 1.5rem;
+    }
+
+    @media (min-width: 640px) {
+      .footer-actions {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+      }
+    }
+
+    .note {
+      font-size: 0.8rem;
+      color: var(--muted);
+      max-width: 380px;
+    }
+
+    @media print {
+      body {
+        background: #ffffff;
+      }
+      .page {
+        max-width: 100%;
+        padding: 0.5rem;
+      }
+      .card {
+        box-shadow: none;
+        border-radius: 0;
+        border: none;
+        padding: 0;
+      }
+      .badge,
+      .footer-actions,
+      .btn,
+      .no-print {
+        display: none !important;
+      }
+      .table-wrapper {
+        border: 1px solid #e5e7eb;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="page">
+  <div class="card">
+    <div class="header-row">
+      <div>
+        <h1>Devis en ligne</h1>
+        <p class="subtitle">Complétez les informations puis ajoutez les lignes de prestation.</p>
+      </div>
+      <div class="badge">
+        <span class="badge-dot"></span> Calcul en direct
+      </div>
+    </div>
+
+    <!-- Infos client -->
+    <div>
+      <div class="section-title">
+        Informations client
+        <span>Ces champs ne sont pas obligatoires mais fortement recommandés.</span>
+      </div>
+      <div class="grid grid-2">
+        <div>
+          <label for="client">Nom du client</label>
+          <input id="client" class="input" type="text" placeholder="Mme / M. Dupont">
+        </div>
+        <div>
+          <label for="chantier">Référence chantier</label>
+          <input id="chantier" class="input" type="text" placeholder="Cuisine appartement 3B, etc.">
+        </div>
+        <div>
+          <label for="email">E-mail</label>
+          <input id="email" class="input" type="email" placeholder="client@example.com">
+        </div>
+        <div>
+          <label for="tel">Téléphone</label>
+          <input id="tel" class="input" type="tel" placeholder="06 12 34 56 78">
+        </div>
+      </div>
+    </div>
+
+    <!-- Lignes de devis -->
+    <div>
+      <div class="section-title">
+        Lignes de devis
+        <span>Sélectionnez une prestation ou saisissez directement le prix.</span>
+      </div>
+
+      <div class="table-wrapper">
+        <div class="table-scroll">
+          <table>
+            <thead>
+              <tr>
+                <th style="width: 32%;">Désignation</th>
+                <th style="width: 8%;">Qté</th>
+                <th style="width: 15%;">PU HT</th>
+                <th style="width: 12%;">TVA</th>
+                <th style="width: 15%;">Total HT</th>
+                <th style="width: 15%;">Total TTC</th>
+                <th style="width: 3%;"></th>
+              </tr>
+            </thead>
+            <tbody id="line-items">
+              <tr class="line-item">
+                <td>
+                  <select class="article-select">
+                    <option value="">-- Choisir un article --</option>
+                  </select>
+                  <div class="small muted article-code"></div>
+                </td>
+                <td>
+                  <input class="input qty-input" type="number" min="0" step="1" value="1">
+                </td>
+                <td>
+                  <input class="input unit-price-input" type="number" min="0" step="0.01" value="0">
+                </td>
+                <td>
+                  <select class="tva-select">
+                    <option value="0.20">20 %</option>
+                    <option value="0.10">10 %</option>
+                    <option value="0.055">5.5 %</option>
+                    <option value="0">0 %</option>
+                  </select>
+                </td>
+                <td class="text-right line-total-ht">0,00&nbsp;€</td>
+                <td class="text-right line-total-ttc">0,00&nbsp;€</td>
+                <td class="text-right">
+                  <button type="button" class="btn-ghost btn-danger remove-line" title="Supprimer la ligne">✕</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div style="padding: 0.45rem 0.6rem; display: flex; justify-content: space-between; align-items: center; gap: 0.5rem;">
+          <button type="button" id="add-line" class="btn btn-outline">
+            + Ajouter une ligne
+          </button>
+          <span class="small muted no-print">Astuce : ajustez les quantités, le prix unitaire ou la TVA, le total se met à jour automatiquement.</span>
+        </div>
+      </div>
+
+      <!-- Totaux -->
+      <div class="totals">
+        <div class="totals-row">
+          <span class="totals-label">Total HT</span>
+          <span class="totals-value" id="total-ht">0,00&nbsp;€</span>
+        </div>
+        <div class="totals-row">
+          <span class="totals-label">Total TVA</span>
+          <span class="totals-value" id="total-tva">0,00&nbsp;€</span>
+        </div>
+        <div class="totals-row totals-main">
+          <span class="totals-label">Total TTC</span>
+          <span class="totals-value" id="total-ttc">0,00&nbsp;€</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Actions -->
+    <div class="footer-actions">
+      <div class="note">
+        En cliquant sur <strong>Imprimer / PDF</strong>, vous pouvez enregistrer ce devis en PDF depuis votre
+        navigateur (imprimante &laquo; Enregistrer au format PDF &raquo;).
+      </div>
+      <div style="display: flex; gap: 0.5rem; justify-content: flex-end; flex-wrap: wrap;">
+        <button type="button" class="btn btn-outline no-print" id="reset-form">
+          Réinitialiser
+        </button>
+        <button type="button" class="btn btn-primary no-print" onclick="window.print()">
+          Imprimer / PDF
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // 🔧 Exemple d'articles (à générer automatiquement depuis ton Excel ensuite)
+  // code = par ex. ton "code Extrabat", label = désignation, unitPrice = prix unitaire HT, tva = taux
+  const ARTICLES = [
+    { code: "ELEC_PLAQUE_32A", label: "Circuit plaque de cuisson 32 A (fourniture + pose)", unitPrice: 180, tva: 0.20 },
+    { code: "ELEC_LV_20A", label: "Circuit lave-vaisselle 20 A (fourniture + pose)", unitPrice: 150, tva: 0.20 },
+    { code: "ELEC_PC_SIMPLE", label: "Prise de courant simple 16 A", unitPrice: 45, tva: 0.20 },
+    { code: "ELEC_ECL_POINT", label: "Point lumineux (fourniture + pose)", unitPrice: 55, tva: 0.10 },
+    { code: "ELEC_TABLEAU", label: "Mise en conformité tableau de répartition", unitPrice: 280, tva: 0.10 }
+  ];
+
+  function formatCurrency(value) {
+    return value.toLocaleString("fr-FR", {
+      style: "currency",
+      currency: "EUR",
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
+    });
+  }
+
+  function populateArticleSelect(selectEl) {
+    // Efface tout sauf la première option
+    selectEl.innerHTML = '<option value="">-- Choisir un article --</option>';
+    ARTICLES.forEach((article, index) => {
+      const opt = document.createElement("option");
+      opt.value = index.toString();
+      opt.textContent = article.label;
+      selectEl.appendChild(opt);
+    });
+  }
+
+  function attachLineEvents(tr) {
+    const select = tr.querySelector(".article-select");
+    const codeDiv = tr.querySelector(".article-code");
+    const qtyInput = tr.querySelector(".qty-input");
+    const unitPriceInput = tr.querySelector(".unit-price-input");
+    const tvaSelect = tr.querySelector(".tva-select");
+    const removeBtn = tr.querySelector(".remove-line");
+
+    select.addEventListener("change", () => {
+      const idx = select.value !== "" ? parseInt(select.value, 10) : null;
+      if (idx != null && !Number.isNaN(idx) && ARTICLES[idx]) {
+        const article = ARTICLES[idx];
+        unitPriceInput.value = article.unitPrice.toString().replace(".", ",").replace(",", ".");
+        tvaSelect.value = article.tva.toString();
+        codeDiv.textContent = article.code ? article.code : "";
+      } else {
+        codeDiv.textContent = "";
+      }
+      updateTotals();
+    });
+
+    qtyInput.addEventListener("input", updateTotals);
+    unitPriceInput.addEventListener("input", updateTotals);
+    tvaSelect.addEventListener("change", updateTotals);
+
+    removeBtn.addEventListener("click", () => {
+      const tbody = document.getElementById("line-items");
+      const lines = tbody.querySelectorAll(".line-item");
+      if (lines.length > 1) {
+        tr.remove();
+        updateTotals();
+      }
+    });
+  }
+
+  function updateTotals() {
+    const lineRows = document.querySelectorAll("#line-items .line-item");
+    let totalHT = 0;
+    let totalTTC = 0;
+
+    lineRows.forEach(tr => {
+      const qtyInput = tr.querySelector(".qty-input");
+      const unitPriceInput = tr.querySelector(".unit-price-input");
+      const tvaSelect = tr.querySelector(".tva-select");
+      const cellHT = tr.querySelector(".line-total-ht");
+      const cellTTC = tr.querySelector(".line-total-ttc");
+
+      const qty = parseFloat((qtyInput.value || "0").replace(",", ".")) || 0;
+      const unitPrice = parseFloat((unitPriceInput.value || "0").replace(",", ".")) || 0;
+      const tva = parseFloat(tvaSelect.value || "0") || 0;
+
+      const lineHT = qty * unitPrice;
+      const lineTTC = lineHT * (1 + tva);
+
+      totalHT += lineHT;
+      totalTTC += lineTTC;
+
+      cellHT.innerHTML = formatCurrency(lineHT).replace("€", "&nbsp;€");
+      cellTTC.innerHTML = formatCurrency(lineTTC).replace("€", "&nbsp;€");
+    });
+
+    const totalTVA = totalTTC - totalHT;
+
+    document.getElementById("total-ht").innerHTML = formatCurrency(totalHT).replace("€", "&nbsp;€");
+    document.getElementById("total-tva").innerHTML = formatCurrency(totalTVA).replace("€", "&nbsp;€");
+    document.getElementById("total-ttc").innerHTML = formatCurrency(totalTTC).replace("€", "&nbsp;€");
+  }
+
+  function addNewLine() {
+    const tbody = document.getElementById("line-items");
+    const firstLine = tbody.querySelector(".line-item");
+    const newLine = firstLine.cloneNode(true);
+
+    // Réinitialise les champs
+    newLine.querySelector(".article-select").value = "";
+    newLine.querySelector(".article-code").textContent = "";
+    newLine.querySelector(".qty-input").value = "1";
+    newLine.querySelector(".unit-price-input").value = "0";
+    newLine.querySelector(".tva-select").value = "0.20";
+    newLine.querySelector(".line-total-ht").innerHTML = "0,00&nbsp;€";
+    newLine.querySelector(".line-total-ttc").innerHTML = "0,00&nbsp;€";
+
+    attachLineEvents(newLine);
+    tbody.appendChild(newLine);
+    updateTotals();
+  }
+
+  function resetForm() {
+    // Réinitialise les inputs texte
+    document.getElementById("client").value = "";
+    document.getElementById("chantier").value = "";
+    document.getElementById("email").value = "";
+    document.getElementById("tel").value = "";
+
+    // Réinitialise les lignes
+    const tbody = document.getElementById("line-items");
+    const allLines = Array.from(tbody.querySelectorAll(".line-item"));
+    const firstLine = allLines[0];
+
+    allLines.slice(1).forEach(tr => tr.remove());
+
+    firstLine.querySelector(".article-select").value = "";
+    firstLine.querySelector(".article-code").textContent = "";
+    firstLine.querySelector(".qty-input").value = "1";
+    firstLine.querySelector(".unit-price-input").value = "0";
+    firstLine.querySelector(".tva-select").value = "0.20";
+    firstLine.querySelector(".line-total-ht").innerHTML = "0,00&nbsp;€";
+    firstLine.querySelector(".line-total-ttc").innerHTML = "0,00&nbsp;€";
+
+    updateTotals();
+  }
+
+  // Initialisation
+  document.addEventListener("DOMContentLoaded", () => {
+    const firstLine = document.querySelector("#line-items .line-item");
+    populateArticleSelect(firstLine.querySelector(".article-select"));
+    attachLineEvents(firstLine);
+    updateTotals();
+
+    document.getElementById("add-line").addEventListener("click", addNewLine);
+    document.getElementById("reset-form").addEventListener("click", resetForm);
+  });
+</script>
+
+</body>
+</html>
